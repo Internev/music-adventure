@@ -3,12 +3,14 @@
     <input ng-model="artist" />
     <button ng-click="start.getData(artist)">Summon Music</button>
   </div>
-  <div ng-repeat="item in start.artistData">
-    <div class="artist-name">
-      <img class="artist-pic" src={{item.image[2]['#text']}}> {{item.name}}
-      <div class="artist-bio">
-        {{item.bio.content}}
-      </div>
+  <div class="artist-name">
+    <img class="artist-pic" src={{start.artistData.image[2]['#text']}}> {{start.artistData.name}}
+    <div class="artist-bio">
+      {{start.artistData.bio.content}}
     </div>
+  </div>
+
+  <div ng-repeat="rArtist in start.relatedArtists">
+    {{ rArtist.name }}
   </div>
 </div>
