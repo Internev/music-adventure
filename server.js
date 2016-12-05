@@ -7,12 +7,12 @@ var app = express();
 
 app.use(express.static('./client'));
 
-app.get('/', (req, res)=>{
+app.get('/lastfm', (req, res)=>{
 
-  rp('http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=cher&api_key=' + keys.LASTFM_API_KEY + '&limit=5&format=json')
+  rp('http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=' + req.query.name + '&api_key=' + keys.LASTFM_API_KEY + '&limit=5&format=json')
     .then((data)=>{
       var dataz = JSON.parse(data).similarartists.artist;
-      res.send('We got data: ' + dataz);
+      res.send(dataz);
     })
     .catch(err=>console.log(err));
 });
