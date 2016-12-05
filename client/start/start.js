@@ -14,6 +14,7 @@ angular.module('start', [])
     .then((resp) => {
       console.log(resp);
       this.data = resp.data;
+
     });
   }
 
