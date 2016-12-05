@@ -5,6 +5,8 @@ var keys = require('./config/hapi.js')
 
 var app = express();
 
+app.use(express.static('./client'));
+
 app.get('/', (req, res)=>{
 
   rp('http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=cher&api_key=' + keys.LASTFM_API_KEY + '&limit=5&format=json')
