@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <head ng-app="adventure">
     <meta charset="utf-8">
     <title>Music Adventure!</title>
   </head>
   <body>
     This is client app index
 
+    <div ng-view></div>
+
+    <script src="libs/angular.min.js"></script>
+    <script src="libs/angular-ui-router.min.js"></script>
+    <script src="app.js"></script>
+    <script src="start/start.js"></script>
   </body>
 </html>
