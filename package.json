@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Internev/music-adventure#readme",
   "dependencies": {
     "express": "^4.14.0",
+    "nodemon": "^1.11.0",
     "request": "^2.79.0"
   }
 }
