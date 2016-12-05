@@ -3,7 +3,7 @@ angular.module('start', [])
 
 .controller('StartCtrl', function($http) {
 
-  this.data = [1, 2, 3, 4, 5];
+  this.data = {};
 
   this.getData = function(name){
     $http({

@@ -1,9 +1,9 @@
 <div>
-
-    start view! {{ start.data }}
-
-    <div ng-click="start.getData('Iron Maiden')">
-      CLICK ME
+    <div>
+      <input ng-model="artist" />
+      <button ng-click="start.getData(artist)">Summon Music</button>
     </div>
-
+    <div ng-repeat="item in start.data">
+      {{item.name}}
+    </div>
 </div>
