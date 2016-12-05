@@ -3,7 +3,7 @@ angular.module('start', [])
 
 .controller('StartCtrl', function($http) {
 
-  this.data = {};
+  this.artistData = {};
 
   this.getData = function(name){
     $http({
@@ -12,8 +12,8 @@ angular.module('start', [])
         params: {name: name}
     })
     .then((resp) => {
-      console.log(resp);
-      this.data = resp.data;
+      console.log(resp.data);
+      this.artistData = resp.data;
 
     });
   }
