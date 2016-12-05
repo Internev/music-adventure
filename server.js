@@ -1,11 +1,18 @@
 var express = require('express');
 var request = require('request');
+var rp = require('request-promise');
+var keys = require('./config/hapi.js')
 
 var app = express();
 
 app.get('/', (req, res)=>{
-  console.log(req);
-  res.send('Server is alive!');
+
+  rp('http://ws.audioscrobbler.com/2.0/?method=artist.getsimilar&artist=cher&api_key=' + keys.LASTFM_API_KEY + '&limit=5&format=json')
+    .then((data)=>{
+      var dataz = JSON.parse(data).similarartists.artist;
+      res.send('We got data: ' + dataz);
+    })
+    .catch(err=>console.log(err));
 });
 
 
