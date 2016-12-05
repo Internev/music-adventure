@@ -1,13 +1,16 @@
 angular.module('adventure', [
     'ngRoute',
-    'ui.router',
     'start'
   ])
-  .config(function($httpProvider, $routeProvider) {
+  .config(($httpProvider, $routeProvider)=>{
+
     $routeProvider
       .when('/', {
-        templateUrl: 'start/start.html',
+        templateUrl: './start/start.html',
         controller: 'StartCtrl',
         controllerAs: 'start'
       })
+      .otherwise({
+        redirectTo: '/'
+      });
   });
