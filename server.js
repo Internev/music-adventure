@@ -9,9 +9,25 @@ app.use(express.static('./client'));
 
 app.get('/lastfm', (req, res)=>{
 
-  rp('http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + req.query.name + '&api_key=' + keys.LASTFM_API_KEY + '&limit=5&format=json')
+  var lastfmReq = {
+    uri: 'http://ws.audioscrobbler.com/2.0/',
+    qs: {
+      method: 'artist.getinfo',
+      artist: req.query.name,
+      api_key: keys.LASTFM_API_KEY,
+      limit: 5,
+      format: 'json'
+    },
+    headers: {
+          'User-Agent': 'Request-Promise'
+      }
+  };
+
+// Get artist info (bio, similar artists) from last.fm
+//'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + req.query.name + '&api_key=' + keys.LASTFM_API_KEY + '&limit=5&format=json'
+
+  rp(lastfmReq)
     .then((data)=>{
-      //console.log(JSON.stringify(data, null, 4));
       res.send(JSON.parse(data));
     })
     .catch(err=>console.log(err));
