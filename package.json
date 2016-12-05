@@ -1,0 +1,23 @@
+{
+  "name": "music-adventure",
+  "version": "0.0.1",
+  "description": "Music Exploration",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Internev/music-adventure.git"
+  },
+  "author": "Neville Challinger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Internev/music-adventure/issues"
+  },
+  "homepage": "https://github.com/Internev/music-adventure#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "request": "^2.79.0"
+  }
+}
