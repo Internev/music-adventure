@@ -29,3 +29,8 @@
   left: 40px;
   margin: 5px 0px 15px 0px;
 }
+
+.playitem {
+  padding: 2px;
+  border: 1px solid grey;
+}

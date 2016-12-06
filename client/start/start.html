@@ -8,8 +8,13 @@
   </nav>
 </div>
 <div class="container">
-<youtube-video video-id="start.youtubeUrl" player-vars="start.playerVars"></youtube-video>
   <div class="col-sm-6">
+    <youtube-video video-id="start.youtubeUrl" player-vars="start.playerVars"></youtube-video>
+    <div class="playlist">
+      <div class="playitem" ng-repeat="item in start.playList">
+        <img src={{item[2]}}>{{ item[0] }} - {{ item[1] }}
+      </div>
+    </div>
     <div>
       <img class="artist-pic" src={{start.artistData.image[2]['#text']}}>
       <span class="artist-name"> {{start.artistData.name}} </span>

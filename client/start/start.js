@@ -14,11 +14,19 @@ angular.module('start', ['youtube-embed', 'util'])
   }
 
   $scope.$on('youtube.player.ended', ($event, player)=>{
+    var current;
     if (this.playList.length > 0){
-      Util.getYoutubeData(this.playList.pop())
+      current = this.playList.shift()
+      Util.getYoutubeData(current[0] + ' - ' + current[1])
       .then((resp) => {
         this.youtubeUrl = resp.data.items[0].id.videoId;
         player.playVideo();
+      })
+      .then(()=>{
+        Util.getLastfmArtistData(current[0])
+        .then((resp)=>{
+          this.artistData = resp.data.artist;
+        });
       });
     } else {
       this.getData(this.artistData.name);
@@ -35,13 +43,15 @@ angular.module('start', ['youtube-embed', 'util'])
       .then(()=>{
         Util.getLastfmSongData(name)
           .then((resp) => {
+            console.log('****\nSongData: ', resp);
             this.artistSongs = resp.data.toptracks.track;
             var track = Math.floor(Math.random() * this.artistSongs.length);
-            this.playList.push(name + '-' + resp.data.toptracks.track[track].name);
-            console.log('playlist after first call to songdata:', this.playList);
+            this.playList.push([resp.data.toptracks['@attr'].artist, resp.data.toptracks.track[track].name,
+            resp.data.toptracks.track[track].image[0]['#text']]);
           })
           .then(()=>{
-            Util.getYoutubeData(this.playList.pop())
+            var current = this.playList.shift();
+            Util.getYoutubeData(current[0] + ' - ' + current[1])
             .then((resp) => {
               console.log('youtube:', resp);
               this.youtubeUrl = resp.data.items[0].id.videoId;
@@ -55,7 +65,8 @@ angular.module('start', ['youtube-embed', 'util'])
       .then((resp) => {
         this.artistSongs = resp.data.toptracks.track;
         var track = Math.floor(Math.random() * this.artistSongs.length);
-        this.playList.push(name + '-' + resp.data.toptracks.track[track].name);
+        this.playList.push([resp.data.toptracks['@attr'].artist, resp.data.toptracks.track[track].name,
+        resp.data.toptracks.track[track].image[0]['#text']]);
         console.log('Playlist changed, now:', this.playList);
       })
   }
