@@ -2,10 +2,18 @@ angular.module('util', [])
 
 .factory('Util', ($http, $location)=>{
 
-  var getLastfmData = function(name){
+  var getLastfmArtistData = function(name){
     return $http({
         method: 'GET',
-        url: '/lastfm',
+        url: '/lastfmartist',
+        params: {name: name}
+    });
+  }
+
+  var getLastfmSongData = function(name){
+    return $http({
+        method: 'GET',
+        url: '/lastfmsong',
         params: {name: name}
     });
   }
@@ -18,9 +26,18 @@ angular.module('util', [])
     });
   }
 
+  var makeYoutubePL = function(){
+    return $http({
+      method: 'GET',
+      url: '/youtubePL'
+    });
+  }
+
   return {
-    getLastfmData: getLastfmData,
-    getYoutubeData: getYoutubeData
+    getLastfmArtistData: getLastfmArtistData,
+    getYoutubeData: getYoutubeData,
+    makeYoutubePL: makeYoutubePL,
+    getLastfmSongData: getLastfmSongData
   }
 
 });
