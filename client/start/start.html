@@ -1,13 +1,14 @@
 <div class="row">
 
 
-  <nav class="navbar navbar-aqua bg-faded">
-    <input ng-model="artist" />
-    <button ng-click="start.getData(artist)">Summon Music</button>
+  <nav class="navbar navbar-aqua">
+    <h1 class="headtext">(づ｡◕‿‿◕｡)づ Music Adventure</h1>
+    <input ng-model="artist" class="searchbox" />
+    <button ng-click="start.getData(artist)" class="searchbox">Summon Music</button>
   </nav>
-  <youtube-video video-id="start.youtubeUrl" player-vars="start.playerVars"></youtube-video>
 </div>
-<div class="row">
+<div class="container">
+<youtube-video video-id="start.youtubeUrl" player-vars="start.playerVars"></youtube-video>
   <div class="col-sm-6">
     <div>
       <img class="artist-pic" src={{start.artistData.image[2]['#text']}}>
