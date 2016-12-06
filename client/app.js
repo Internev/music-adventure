@@ -10,6 +10,11 @@ angular.module('adventure', [
         controller: 'StartCtrl',
         controllerAs: 'start'
       })
+      // .when('/play', {
+      //   templateUrl: './play/play.html',
+      //   controller: 'PlayCtrl',
+      //   controllerAs: 'play'
+      // })
       .otherwise({
         redirectTo: '/'
       });

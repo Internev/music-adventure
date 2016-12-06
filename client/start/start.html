@@ -1,15 +1,17 @@
 <div class="row">
+
+
+  <nav class="navbar navbar-aqua bg-faded">
+    <input ng-model="artist" />
+    <button ng-click="start.getData(artist)">Summon Music</button>
+  </nav>
+  <youtube-video video-id="start.youtubeUrl" player-vars="start.playerVars"></youtube-video>
+</div>
+<div class="row">
   <div class="col-sm-6">
-
-    <nav class="navbar navbar-aqua bg-faded">
-      <input ng-model="artist" />
-      <button ng-click="start.getData(artist)">Summon Music</button>
-    </nav>
-
-    <youtube-video video-id="start.youtubeUrl" player-vars="start.playerVars"></youtube-video>
-
     <div>
-      <img class="artist-pic" src={{start.artistData.image[2]['#text']}}><span  class="artist-name"> {{start.artistData.name}} </span>
+      <img class="artist-pic" src={{start.artistData.image[2]['#text']}}>
+      <span class="artist-name"> {{start.artistData.name}} </span>
       <div class="artist-bio">
         {{start.artistData.bio.content}}
       </div>

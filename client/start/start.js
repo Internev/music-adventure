@@ -1,7 +1,7 @@
 
-angular.module('start', ['youtube-embed', 'lastfm'])
+angular.module('start', ['youtube-embed', 'util'])
 
-.controller('StartCtrl', function($http, Lastfm) {
+.controller('StartCtrl', function($http, Util) {
 
   this.artistData = {};
   this.relatedArtists = [];
@@ -12,10 +12,19 @@ angular.module('start', ['youtube-embed', 'lastfm'])
   }
 
   this.getData = function(name){
-    Lastfm.getLastfmData(name)
+    Util.getLastfmData(name)
       .then((resp) => {
-        console.log(resp);
+        console.log('lastfm', resp.data);
+        this.artistData = resp.data.artist;
+        this.relatedArtists = resp.data.artist.similar.artist;
       });
+
+    Util.getYoutubeData(name)
+      .then((resp) => {
+        console.log('youtube:', resp);
+        this.youtubeUrl = resp.data.items[0].id.videoId
+      });
+
   }
 
   // this.getData = function(name){

@@ -9,6 +9,33 @@ app.use(express.static('./client'));
 
 app.get('/lastfm', (req, res)=>{
 
+  var lastfmReq = {
+    uri: 'http://ws.audioscrobbler.com/2.0/',
+    qs: {
+      method: 'artist.getinfo',
+      artist: req.query.name,
+      api_key: keys.LASTFM_API_KEY,
+      limit: 5,
+      format: 'json'
+    },
+    headers: {
+          'User-Agent': 'Request-Promise'
+      }
+  };
+
+  var returnObj = {};
+
+  rp(lastfmReq)
+    .then((data)=>{
+      // returnObj.lastfm = JSON.parse(data);
+      console.log("lastfm responded", JSON.parse(data));
+      res.send(JSON.parse(data));
+    })
+    .catch(err=>console.log(err));
+});
+
+app.get('/youtube', (req, res) => {
+
   var youtubeReq = {
     uri: 'https://www.googleapis.com/youtube/v3/search',
     qs: {
@@ -39,35 +66,13 @@ app.get('/lastfm', (req, res)=>{
       }
   }
 
-  var lastfmReq = {
-    uri: 'http://ws.audioscrobbler.com/2.0/',
-    qs: {
-      method: 'artist.getinfo',
-      artist: req.query.name,
-      api_key: keys.LASTFM_API_KEY,
-      limit: 5,
-      format: 'json'
-    },
-    headers: {
-          'User-Agent': 'Request-Promise'
-      }
-  };
-
-  var returnObj = {};
-
   rp(youtubeReq)
-    .then((data)=>{
+    .then((data) => {
       console.log('youtube responded!', JSON.parse(data));
-      returnObj.youtube = JSON.parse(data);
+      res.send(JSON.parse(data))
     })
-    .then(
-      rp(lastfmReq)
-      .then((data)=>{
-        returnObj.lastfm = JSON.parse(data);
-        res.send(returnObj);
-      })
-    )
     .catch(err=>console.log(err));
+
 });
 
 
