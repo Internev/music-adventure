@@ -3,6 +3,11 @@
     <input ng-model="artist" />
     <button ng-click="start.getData(artist)">Summon Music</button>
   </div>
+
+  <div className="embed-responsive embed-responsive-16by9">
+    <iframe className="embed-responsive-item" src="https://www.youtube.com/embed/" + {{start.youtubeUrl}} + "?autoplay=true" allowFullScreen></iframe>
+  </div>
+
   <div class="artist-name">
     <img class="artist-pic" src={{start.artistData.image[2]['#text']}}> {{start.artistData.name}}
     <div class="artist-bio">

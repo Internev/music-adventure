@@ -9,6 +9,21 @@ app.use(express.static('./client'));
 
 app.get('/lastfm', (req, res)=>{
 
+  var youtubeReq = {
+    uri: 'https://www.googleapis.com/youtube/v3/search',
+    qs: {
+      key: keys.YOUTUBE_API_KEY,
+      maxResults: 1,
+      embeddable: true,
+      part: 'snippet',
+      type: 'video',
+      q: req.query.name
+    },
+    headers: {
+          'User-Agent': 'Request-Promise'
+      }
+  }
+
   var lastfmReq = {
     uri: 'http://ws.audioscrobbler.com/2.0/',
     qs: {
@@ -23,13 +38,20 @@ app.get('/lastfm', (req, res)=>{
       }
   };
 
-// Get artist info (bio, similar artists) from last.fm
-//'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + req.query.name + '&api_key=' + keys.LASTFM_API_KEY + '&limit=5&format=json'
+  var returnObj = {};
 
-  rp(lastfmReq)
+  rp(youtubeReq)
     .then((data)=>{
-      res.send(JSON.parse(data));
+      console.log('youtube responded!', JSON.parse(data));
+      returnObj.youtube = JSON.parse(data);
     })
+    .then(
+      rp(lastfmReq)
+      .then((data)=>{
+        returnObj.lastfm = JSON.parse(data);
+        res.send(returnObj);
+      })
+    )
     .catch(err=>console.log(err));
 });
 
