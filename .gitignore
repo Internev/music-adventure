@@ -1,5 +1,2 @@
 ## API keys ##
 config/hapi.js
-
-## libs ##
-client/libs/*.*
