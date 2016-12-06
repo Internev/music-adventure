@@ -1,5 +1,5 @@
 
-angular.module('start', [])
+angular.module('start', ['youtube-embed'])
 
 .controller('StartCtrl', function($http) {
 
@@ -19,7 +19,6 @@ angular.module('start', [])
       this.relatedArtists = resp.data.lastfm.artist.similar.artist;
       this.youtubeUrl = resp.data.youtube.items[0].id.videoId;
       console.log(this.youtubeUrl);
-      // $scope.$apply();
     });
   }
 
