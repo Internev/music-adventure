@@ -6,6 +6,10 @@ angular.module('start', ['youtube-embed'])
   this.artistData = {};
   this.relatedArtists = [];
   this.youtubeUrl;
+  this.playerVars = {
+    controls: 1,
+    autoplay: 1
+  }
 
   this.getData = function(name){
     $http({
