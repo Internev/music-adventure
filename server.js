@@ -24,6 +24,21 @@ app.get('/lastfm', (req, res)=>{
       }
   }
 
+  var youtubePlaylistReq = {
+    uri: 'https://www.googleapis.com/youtube/v3/playlists',
+    qs: {
+      key: keys.YOUTUBE_API_KEY,
+      maxResults: 1,
+      embeddable: true,
+      part: 'snippet',
+      type: 'video',
+      q: req.query.name
+    },
+    headers: {
+          'User-Agent': 'Request-Promise'
+      }
+  }
+
   var lastfmReq = {
     uri: 'http://ws.audioscrobbler.com/2.0/',
     qs: {

@@ -1,0 +1,17 @@
+.navbar-aqua {
+  background-color: rgb(0, 255, 240);
+}
+
+.artist-pic {
+  float: left;
+  margin-right: 5px;
+  margin-bottom: 2px;
+}
+
+.artist-name {
+  font-size: 3em;
+}
+
+.artist-bio {
+  font-size: 1em;
+}

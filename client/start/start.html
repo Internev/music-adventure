@@ -1,19 +1,22 @@
-<div>
-  <div>
-    <input ng-model="artist" />
-    <button ng-click="start.getData(artist)">Summon Music</button>
-  </div>
+<div class="row">
+  <div class="col-sm-6">
 
-  <youtube-video video-id="start.youtubeUrl" player-vars="start.playerVars"></youtube-video>
+    <nav class="navbar navbar-aqua bg-faded">
+      <input ng-model="artist" />
+      <button ng-click="start.getData(artist)">Summon Music</button>
+    </nav>
 
-  <div class="artist-name">
-    <img class="artist-pic" src={{start.artistData.image[2]['#text']}}> {{start.artistData.name}}
-    <div class="artist-bio">
-      {{start.artistData.bio.content}}
+    <youtube-video video-id="start.youtubeUrl" player-vars="start.playerVars"></youtube-video>
+
+    <div>
+      <img class="artist-pic" src={{start.artistData.image[2]['#text']}}><span  class="artist-name"> {{start.artistData.name}} </span>
+      <div class="artist-bio">
+        {{start.artistData.bio.content}}
+      </div>
     </div>
-  </div>
 
-  <div ng-repeat="rArtist in start.relatedArtists">
-    {{ rArtist.name }}
+    <div ng-repeat="rArtist in start.relatedArtists">
+      {{ rArtist.name }}
+    </div>
   </div>
 </div>
