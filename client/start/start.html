@@ -9,13 +9,22 @@
 </div>
 <div class="container">
   <div class="col-sm-6">
-    <youtube-video video-id="start.youtubeUrl" player-vars="start.playerVars"></youtube-video>
+    <div class="embed-responsive embed-responsive-16by9">
+    <youtube-video video-id="start.youtubeUrl" player="player" player-vars="start.playerVars"></youtube-video>
+  </div>
+  <div ng-class="{hidden: start.hidden}">
+    <i class="controls glyphicon glyphicon-play" ng-click="start.play(player)"></i>
+    <i class="controls glyphicon glyphicon-pause" ng-click="start.pause(player)"></i>
+    <i class="controls glyphicon glyphicon-stop" ng-click="start.stop(player)"></i>
+    <i class="controls glyphicon glyphicon-fast-forward" ng-click="start.next(player)"></i>
+  </div>
     <div class="playlist">
-      <div class="playitem" ng-repeat="item in start.playList">
-        <img src={{item[2]}}>{{ item[0] }} - {{ item[1] }}
+      <div class="playitem pointer" ng-repeat="item in start.playList" ng-click="start.getData(item[0])">
+        <img src={{item[2]}} class="playlistimg">{{ item[0] }} - {{ item[1] }}
       </div>
     </div>
-    <div>
+  </div>
+    <div class="col-sm-6">
       <img class="artist-pic" src={{start.artistData.image[2]['#text']}}>
       <span class="artist-name"> {{start.artistData.name}} </span>
       <div class="artist-bio">
@@ -23,8 +32,4 @@
       </div>
     </div>
 
-    <div ng-repeat="rArtist in start.relatedArtists">
-      {{ rArtist.name }}
-    </div>
-  </div>
 </div>

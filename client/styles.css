@@ -33,4 +33,23 @@
 .playitem {
   padding: 2px;
   border: 1px solid grey;
+  margin: 1px;
+}
+
+.playlistimg {
+  margin-right: 3px;
+}
+
+.controls {
+  cursor: pointer;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.hidden {
+  display: none;
+}
+
+.pointer {
+  cursor: pointer;
 }

@@ -1,17 +1,18 @@
 
 angular.module('start', ['youtube-embed', 'util'])
 
-.controller('StartCtrl', function($http, Util, $scope) {
+.controller('StartCtrl', function($http, Util, $scope, $rootScope) {
 
   this.artistData = {};
   this.relatedArtists = [];
-  this.artistSongs;
+  this.artistSongs = [];
   this.playList = [];
   this.youtubeUrl;
   this.playerVars = {
-    controls: 1,
+    controls: 0,
     autoplay: 1
   }
+  this.hidden = true;
 
   $scope.$on('youtube.player.ended', ($event, player)=>{
     var current;
@@ -35,6 +36,11 @@ angular.module('start', ['youtube-embed', 'util'])
 
 //I have created promisecallbackhell?!?
   this.getData = function(name){
+    //reset in case we call again.
+    this.artistData = {};
+    this.relatedArtists = [];
+    this.artistSongs = [];
+
     Util.getLastfmArtistData(name)
       .then((resp) => {
         this.artistData = resp.data.artist;
@@ -43,9 +49,9 @@ angular.module('start', ['youtube-embed', 'util'])
       .then(()=>{
         Util.getLastfmSongData(name)
           .then((resp) => {
-            console.log('****\nSongData: ', resp);
             this.artistSongs = resp.data.toptracks.track;
             var track = Math.floor(Math.random() * this.artistSongs.length);
+            this.playList = [];
             this.playList.push([resp.data.toptracks['@attr'].artist, resp.data.toptracks.track[track].name,
             resp.data.toptracks.track[track].image[0]['#text']]);
           })
@@ -53,7 +59,7 @@ angular.module('start', ['youtube-embed', 'util'])
             var current = this.playList.shift();
             Util.getYoutubeData(current[0] + ' - ' + current[1])
             .then((resp) => {
-              console.log('youtube:', resp);
+              this.hidden = false;
               this.youtubeUrl = resp.data.items[0].id.videoId;
             });
           })
@@ -67,7 +73,6 @@ angular.module('start', ['youtube-embed', 'util'])
         var track = Math.floor(Math.random() * this.artistSongs.length);
         this.playList.push([resp.data.toptracks['@attr'].artist, resp.data.toptracks.track[track].name,
         resp.data.toptracks.track[track].image[0]['#text']]);
-        console.log('Playlist changed, now:', this.playList);
       })
   }
 
@@ -75,9 +80,39 @@ angular.module('start', ['youtube-embed', 'util'])
   setInterval(()=>{
     if (this.relatedArtists.length > 0){
       var artist = this.relatedArtists.pop();
-      console.log('about to populate playlist with:', artist.name);
       this.populatePlaylist(artist.name);
     }
   }, 5000);
 
+  this.play = (player) => {
+    player.playVideo();
+  };
+
+  this.pause = (player) => {
+    player.pauseVideo();
+  };
+
+  this.stop = (player) => {
+    player.stopVideo();
+  };
+
+  this.next = (player) => {
+    var current;
+    if (this.playList.length > 0){
+      current = this.playList.shift()
+      Util.getYoutubeData(current[0] + ' - ' + current[1])
+      .then((resp) => {
+        this.youtubeUrl = resp.data.items[0].id.videoId;
+        player.playVideo();
+      })
+      .then(()=>{
+        Util.getLastfmArtistData(current[0])
+        .then((resp)=>{
+          this.artistData = resp.data.artist;
+        });
+      });
+    } else {
+      this.getData(this.artistData.name);
+    }
+  }
 });

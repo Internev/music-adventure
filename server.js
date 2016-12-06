@@ -48,7 +48,6 @@ app.get('/lastfmsong', (req, res) => {
 
   rp(lastfmReq)
     .then((data) => {
-      console.log("song data!", data);
       res.send(JSON.parse(data));
     })
     .catch(err => console.log(err));
