@@ -3,6 +3,8 @@ angular.module('start', ['youtube-embed', 'util'])
 
 .controller('StartCtrl', function($http, Util, $scope, $rootScope) {
 
+  this.type = 'artist'
+  this.searchbox = '';
   this.artistData = {};
   this.relatedArtists = [];
   this.artistSongs = [];
@@ -13,6 +15,20 @@ angular.module('start', ['youtube-embed', 'util'])
     autoplay: 1
   }
   this.hidden = true;
+
+  this.getData = (name)=>{
+    //reset in case we call again.
+    this.artistData = {};
+    this.relatedArtists = [];
+    this.artistSongs = [];
+    this.searchbox = '';
+
+    if (this.type === 'genre'){
+      this.getGenreData(name);
+    } else {
+      this.getArtistData(name);
+    }
+  };
 
   $scope.$on('youtube.player.ended', ($event, player)=>{
     var current;
@@ -30,16 +46,13 @@ angular.module('start', ['youtube-embed', 'util'])
         });
       });
     } else {
-      this.getData(this.artistData.name);
+      this.getArtistData(this.artistData.name);
     }
   });
 
 //I have created promisecallbackhell?!?
-  this.getData = function(name){
-    //reset in case we call again.
-    this.artistData = {};
-    this.relatedArtists = [];
-    this.artistSongs = [];
+  this.getArtistData = function(name){
+    this.type = 'artist';
 
     Util.getLastfmArtistData(name)
       .then((resp) => {
@@ -79,7 +92,7 @@ angular.module('start', ['youtube-embed', 'util'])
   // Request tracks every 5 seconds so we don't flood API.
   setInterval(()=>{
     if (this.relatedArtists.length > 0){
-      var artist = this.relatedArtists.pop();
+      var artist = this.relatedArtists.shift();
       this.populatePlaylist(artist.name);
     }
   }, 5000);
@@ -112,7 +125,23 @@ angular.module('start', ['youtube-embed', 'util'])
         });
       });
     } else {
-      this.getData(this.artistData.name);
+      this.getArtistData(this.artistData.name);
     }
+  };
+
+  this.getGenreData = (name) => {
+    this.type = 'genre';
+
+    Util.getLastfmGenre(name)
+      .then((resp) => {
+        this.relatedArtists = resp.data.topartists.artist;
+        var track = Math.floor(Math.random() * this.relatedArtists.length);
+        this.getArtistData(this.relatedArtists[track].name);
+      });
   }
+
+
+
+
+
 });

@@ -15,7 +15,6 @@ app.get('/lastfmartist', (req, res) => {
       method: 'artist.getinfo',
       artist: req.query.name,
       api_key: keys.LASTFM_API_KEY,
-      limit: 5,
       format: 'json'
     },
     headers: {
@@ -116,6 +115,28 @@ app.get('/youtubePL', (req, res) => {
       console.log('******\n\nyoutubePL responded!\n\n******', data);
     })
     .catch(err=>console.error(err));
+
+});
+
+app.get('/lastfmgenre', (req, res) => {
+  var lastfmReq = {
+    uri: 'http://ws.audioscrobbler.com/2.0/',
+    qs: {
+      method: 'tag.gettopartists',
+      tag: req.query.name,
+      api_key: keys.LASTFM_API_KEY,
+      format: 'json'
+    },
+    headers: {
+      'User-Agent': 'Request-Promise'
+    }
+  };
+
+  rp(lastfmReq)
+    .then((data) => {
+      res.send(JSON.parse(data));
+    })
+    .catch(err => console.log(err));
 
 });
 

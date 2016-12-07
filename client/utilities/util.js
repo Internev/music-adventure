@@ -33,11 +33,20 @@ angular.module('util', [])
     });
   }
 
+  var getLastfmGenre = function(name){
+    return $http({
+      method: 'GET',
+      url: '/lastfmgenre',
+      params: {name: name}
+    })
+  }
+
   return {
     getLastfmArtistData: getLastfmArtistData,
     getYoutubeData: getYoutubeData,
     makeYoutubePL: makeYoutubePL,
-    getLastfmSongData: getLastfmSongData
+    getLastfmSongData: getLastfmSongData,
+    getLastfmGenre: getLastfmGenre
   }
 
 });
