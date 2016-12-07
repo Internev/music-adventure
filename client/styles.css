@@ -20,7 +20,7 @@
 .headtext {
   color: white;
   font-weight: bold;
-  text-decoration-style: dashed;
+  -webkit-text-stroke: 1px grey;
   /*text-shadow: 1px 1px 1px grey;*/
 }
 
